@@ -12,6 +12,7 @@ export interface IJsonViewerProps {
 const JsonViewer: React.FC<IJsonViewerProps> = (props) => {
   return (
     <div className={styles.jsonViewer}>
+      <h3></h3>
       {/* {props.data && (
         <JSONPretty
           id="json-pretty"
@@ -20,7 +21,22 @@ const JsonViewer: React.FC<IJsonViewerProps> = (props) => {
         ></JSONPretty>
       )} */}
 
-      <DropzoneArea onChange={() => null} />
+      <DropzoneArea
+        onChange={(file) => {
+          let reader = new FileReader();
+
+          reader.onload = function () {
+            console.log(JSON.parse(reader.result));
+            debugger;
+          };
+    
+          if (file[0] !== undefined) {
+            reader.readAsText(file[0]);
+          }
+
+          debugger;
+        }}
+      />
     </div>
   );
 };
