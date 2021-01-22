@@ -4,7 +4,20 @@
   }
 }
 
-
 .jsonViewer{
-  color: red;
+  color: white;
+
+  .info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .dataContainer {
+    color: black;
+    display: flex;
+    flex-direction: column;
+  }
 }

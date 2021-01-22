@@ -3,6 +3,7 @@ import styles from "./compare.module.scss";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import JsonViewer from "./../../components/JsonViewer";
+import { pctSameProps } from "./../../utils/score";
 
 interface ICompareProps {}
 
@@ -13,8 +14,25 @@ interface ICompareState {
 
 export class Compare extends React.PureComponent<ICompareProps, ICompareState> {
   state = {
-    data1: { test: "heinner" },
-    data2: { test: { heinner: "name" } },
+    data1: null,
+    data2: null,
+  };
+
+  handleData1 = (data1: Object) => {
+    this.setState({ data1 });
+  };
+
+  handleData2 = (data2: Object) => {
+    this.setState({ data2 });
+  };
+
+  getScore = () => {
+    return (
+      <span>{`Score: ${pctSameProps(
+        this.state.data1,
+        this.state.data2
+      )}%`}</span>
+    );
   };
 
   render() {
@@ -23,13 +41,18 @@ export class Compare extends React.PureComponent<ICompareProps, ICompareState> {
         <Grid container spacing={3}>
           <Grid item xs={12} lg={6}>
             <Paper className={styles.paper}>
-              <JsonViewer data={this.state.data1} />
+              <JsonViewer onDataChange={this.handleData1} />
             </Paper>
           </Grid>
           <Grid item xs={12} lg={6}>
             <Paper className={styles.paper}>
-              <JsonViewer data={this.state.data2} />
+              <JsonViewer onDataChange={this.handleData2} />
             </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            {this.state.data1 && this.state.data2 && (
+              <div className={styles.resultContainer}>{this.getScore()}</div>
+            )}
           </Grid>
         </Grid>
       </div>
